@@ -34,11 +34,11 @@ from sunbeam.steps.openstack import (
     OPENSTACK_MODEL_CONFIG_KEY,
     RABBITMQ_STORAGE_KEY,
     DeployControlPlaneStep,
+    EndpointsConfigurationStep,
     OpenStackPatchLoadBalancerServicesIPPoolStep,
     OpenStackPatchLoadBalancerServicesIPStep,
     ReapplyOpenStackTerraformPlanStep,
     UpdateOpenStackModelConfigStep,
-    EndpointsConfigurationStep,
     compute_ha_scale,
     compute_ingress_scale,
     compute_os_api_scale,
@@ -1989,7 +1989,7 @@ class TestEndpointsConfigurationStepPrompt:
     def test_no_manifest_no_accept_defaults_prompts_interactively(
         self, mock_question_bank, mock_load_answers
     ):
-        """With no manifest and no --accept-defaults, the user should be asked."""
+        """With no manifest and no --accept-defaults, should prompt."""
         mock_load_answers.return_value = {}
         mock_bank_instance = mock_question_bank.return_value
         mock_bank_instance.configure.ask.return_value = True
@@ -2006,7 +2006,7 @@ class TestEndpointsConfigurationStepPrompt:
     def test_manifest_without_endpoints_does_not_prompt(
         self, mock_question_bank, mock_load_answers
     ):
-        """Manifest provided but core.config.endpoints, the user should not be asked."""
+        """Manifest provided and no core.config.endpoints, should not prompt."""
         mock_load_answers.return_value = {}
         mock_bank_instance = mock_question_bank.return_value
 
@@ -2025,7 +2025,7 @@ class TestEndpointsConfigurationStepPrompt:
     def test_manifest_with_endpoints_does_not_prompt_uses_value(
         self, mock_question_bank, mock_load_answers
     ):
-        """Manifest provided with core.config.endpoints set, the user should not be asked"""
+        """Manifest provided with core.config.endpoints, should not prompt."""
         mock_load_answers.return_value = {}
         mock_bank_instance = mock_question_bank.return_value
 
