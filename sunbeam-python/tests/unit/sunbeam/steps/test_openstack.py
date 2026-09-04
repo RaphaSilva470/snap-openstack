@@ -2052,5 +2052,5 @@ class TestEndpointsConfigurationStepPrompt:
         step = self._make_step(manifest=None, accept_defaults=True)
         step.prompt(console=None)
 
-        mock_bank_instance.ask.assert_not_called()
+        mock_bank_instance.configure.ask.assert_not_called()
         assert step.variables["configure"] is False
